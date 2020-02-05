@@ -3,9 +3,12 @@ import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom
 import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { token$, updateToken } from '../token/Store.js';
 import axios from 'axios';
+import AddIcon from '@material-ui/icons/Add';
+import DeleteIcon from '@material-ui/icons/Delete';
 import '../styles/App.css';
 let jwt = require('jsonwebtoken');
-
+const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+const date = new Date().toLocaleDateString("SV-se", options);
 class Todos extends React.Component {
 
   constructor(props) {
@@ -17,7 +20,9 @@ class Todos extends React.Component {
       new_todo: {
         content: '',
         id: '',
-      }
+      },
+      date: date,
+      error: 'hidden',
     }
     this.getTodos = this.getTodos.bind(this);
     this.onTodoChange = this.onTodoChange.bind(this);
@@ -27,6 +32,7 @@ class Todos extends React.Component {
 
   componentDidMount () {
     this.getTodos();
+    console.log(this.state.date)
   }
 
   getTodos () {
@@ -64,6 +70,10 @@ class Todos extends React.Component {
         }
       })
       .then((response) => {
+        this.setState({
+          input: '',
+          error: 'hidden'
+        })
         let stateCopy = Object.assign({}, this.state);
         stateCopy.new_todo.content = response.data.todo.content;
         stateCopy.new_todo.id = response.data.todo.id;
@@ -71,18 +81,27 @@ class Todos extends React.Component {
         console.log(this.state.new_todo)
         let joined = this.state.todos.concat(this.state.new_todo);
         this.setState({todos: joined})
+        this.setState({new_todo: {
+          content: '',
+          id: '',
+        }})
         console.log(this.state.todos);
+      })
+      .catch((response) => {
+        console.log(response)
+        this.setState({error: 'visible'})
       })
     })
   }
 
+
+
   onDelete (e) {
     e.preventDefault();
-    let targetedID = e.target.id;
-    let targetedList = e.target.parentElement;
-    console.log(targetedList);
-    console.log(targetedID);
-    axios.delete(`http://3.120.96.16:3002/todos/${targetedID}`, {
+    console.log(e.target)
+    let targetedList = e.target.parentElement.parentElement.id;
+    console.log(targetedList)
+    axios.delete(`http://3.120.96.16:3002/todos/${targetedList}`, {
       headers: {
         Authorization: 'Bearer ' + token$.value
         }
@@ -98,26 +117,66 @@ class Todos extends React.Component {
 
   render () {
 
+
+
     return (
       <div className="Todos">
-      <Helmet>
-        <title>Todos</title>
-      </Helmet>
-      <header>
-      <h1> Logged in user: {this.state.email} </h1>
-      </header>
-      <form onSubmit={this.onAdd}>
-      <p> Add new todo item: </p>
-      <input type="text" value={this.state.input} onChange={this.onTodoChange} />
-      <button type="submit" onSubmit={this.onAdd}>Submit</button>
-      </form>
-      <ul>
-      {this.state.todos.map((items) =>
-        <li id={items.id} key={items.id}>{items.content}
-        <button id={items.id} onClick={this.onDelete}> Delete </button>
-        </li>
-      )}
-      </ul>
+        <Helmet>
+          <title>Todos</title>
+        </Helmet>
+        <header>
+          <div className="inner-header flex">
+            <h1>Welcome {this.state.email}</h1>
+          </div>
+          <div>
+            <svg className="waves" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
+              <defs>
+                <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+              </defs>
+              <g className="parallax">
+                <use xlinkHref="#gentle-wave" x="48" y="0" fill="rgba(248,205,218,0.7)" />
+                <use xlinkHref="#gentle-wave" x="48" y="3" fill="rgba(248,205,218,0.5)" />
+                <use xlinkHref="#gentle-wave" x="48" y="5" fill="rgba(248,205,218,0.3)" />
+                <use xlinkHref="#gentle-wave" x="48" y="7" fill="#F8CDDA" />
+              </g>
+            </svg>
+          </div>
+        </header>
+        <main>
+          <div>
+            <div className="todo">
+              <div className="cardtop">
+                <form onSubmit={this.onAdd}>
+                  <div className="topcontent">
+                    <p id="new"> Add new todo item: </p>
+                    <input type="text" value={this.state.input} onChange={this.onTodoChange} style={this.state.error === 'visible' ? {border: '1.5px solid #f79ac3'} : {border: 'none'} } />
+                    <p id="error" style={{visibility: this.state.error}}>Invalid input</p>
+                    <div className="button-container" onClick={this.onAdd}>
+                      <div className="button">
+                        <div className="icon">
+                          <i><AddIcon /> </i>
+                        </div>
+                      </div>
+                    </div>
+                    <p id="datetext">{this.state.date}</p>
+                      </div>
+                      </form>
+              </div>
+              <div className="cardbottom">
+                <ul>
+                  {this.state.todos.map((items) =>
+                    <li id={items.id} key={items.id}>{items.content}
+                      <button id={items.id} onClick={this.onDelete}>
+                        <DeleteIcon />
+                      </button>
+                      <hr></hr>
+                    </li>
+                  )}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     )
   }
