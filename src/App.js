@@ -2,9 +2,11 @@ import React from 'react';
 import Login from './pages/Login.js';
 import Registration from './pages/Registration.js';
 import Todos from './pages/Todos.js';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
-import './styles/App.css';
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+import { HelmetProvider } from 'react-helmet-async';
+import './styles/Login.css';
+import './styles/Todo.css';
+
 
 class App extends React.Component {
 

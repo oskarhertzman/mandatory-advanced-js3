@@ -1,11 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
-import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { Redirect } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
 import { token$, updateToken } from '../token/Store.js';
 import axios from 'axios';
 import AddIcon from '@material-ui/icons/Add';
 import DeleteIcon from '@material-ui/icons/Delete';
-import '../styles/App.css';
+import '../styles/Todo.css';
 let jwt = require('jsonwebtoken');
 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 const date = new Date().toLocaleDateString("SV-se", options);
@@ -23,11 +23,17 @@ class Todos extends React.Component {
       },
       date: date,
       error: 'hidden',
+      login: false,
+      register: false,
+      token: '',
     }
     this.getTodos = this.getTodos.bind(this);
     this.onTodoChange = this.onTodoChange.bind(this);
     this.onAdd = this.onAdd.bind(this);
     this.onDelete = this.onDelete.bind(this);
+    this.toRegister = this.toRegister.bind(this);
+    this.toLogin = this.toLogin.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
   componentDidMount () {
@@ -37,7 +43,9 @@ class Todos extends React.Component {
 
   getTodos () {
     this.subscription = token$.subscribe((token) => {
+      if (token) {
       console.log(token);
+      this.setState({token: token})
       let decoded = jwt.decode(token);
       console.log(decoded);
       if(decoded) {
@@ -48,10 +56,15 @@ class Todos extends React.Component {
             Authorization: 'Bearer ' + token
           }
         })
-      .then((response) => {
-        this.setState({todos: response.data.todos})
-        console.log(response.data.todos);
-      })
+        .then((response) => {
+          this.setState({todos: response.data.todos})
+          console.log(response.data.todos);
+        })
+      }
+      else if (!this.state.token) {
+        alert("Please login to use the app.")
+        this.setState({login: true})
+      }
     })
   }
 
@@ -94,8 +107,6 @@ class Todos extends React.Component {
     })
   }
 
-
-
   onDelete (e) {
     e.preventDefault();
     console.log(e.target)
@@ -115,19 +126,42 @@ class Todos extends React.Component {
       })
   }
 
+  toRegister () {
+    this.setState({register: true})
+  }
+
+
+  toLogin () {
+    this.setState({login: true})
+  }
+
+  onLogout (e) {
+    e.preventDefault();
+    updateToken('');
+    this.setState({login: true});
+
+  }
+
+  componentWillUnmount () {
+    this.subscription.unsubscribe();
+  }
+
   render () {
-
-
-
+    if (this.state.login) {
+      return  <Redirect to={'/login'}></Redirect>
+    }
     return (
       <div className="Todos">
         <Helmet>
           <title>Todos</title>
         </Helmet>
-        <header>
+        <header className="todoHeader">
           <div className="inner-header flex">
             <h1>Welcome {this.state.email}</h1>
           </div>
+          <div className="links">
+          </div>
+          <p id="signout" onClick={this.onLogout}>Sign out</p>
           <div>
             <svg className="waves" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shapeRendering="auto">
               <defs>
@@ -149,7 +183,7 @@ class Todos extends React.Component {
                 <form onSubmit={this.onAdd}>
                   <div className="topcontent">
                     <p id="new"> Add new todo item: </p>
-                    <input type="text" value={this.state.input} onChange={this.onTodoChange} style={this.state.error === 'visible' ? {border: '1.5px solid #f79ac3'} : {border: 'none'} } />
+                    <input type="text" value={this.state.input} onChange={this.onTodoChange} style={this.state.error === 'visible' ? {border: '1px solid #f79ac3'} : {border: 'none'} } />
                     <p id="error" style={{visibility: this.state.error}}>Invalid input</p>
                     <div className="button-container" onClick={this.onAdd}>
                       <div className="button">
