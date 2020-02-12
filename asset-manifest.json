@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/oskarhertzman.github.io/mandatory-advanced-js3/static/css/main.727c9a80.chunk.css",
-    "main.js": "/oskarhertzman.github.io/mandatory-advanced-js3/static/js/main.98ceff03.chunk.js",
-    "main.js.map": "/oskarhertzman.github.io/mandatory-advanced-js3/static/js/main.98ceff03.chunk.js.map",
-    "runtime-main.js": "/oskarhertzman.github.io/mandatory-advanced-js3/static/js/runtime-main.d837a4b0.js",
-    "runtime-main.js.map": "/oskarhertzman.github.io/mandatory-advanced-js3/static/js/runtime-main.d837a4b0.js.map",
-    "static/js/2.99478aa9.chunk.js": "/oskarhertzman.github.io/mandatory-advanced-js3/static/js/2.99478aa9.chunk.js",
-    "static/js/2.99478aa9.chunk.js.map": "/oskarhertzman.github.io/mandatory-advanced-js3/static/js/2.99478aa9.chunk.js.map",
-    "index.html": "/oskarhertzman.github.io/mandatory-advanced-js3/index.html",
-    "precache-manifest.238ab1a441f3851e2888ccfc68380ffa.js": "/oskarhertzman.github.io/mandatory-advanced-js3/precache-manifest.238ab1a441f3851e2888ccfc68380ffa.js",
-    "service-worker.js": "/oskarhertzman.github.io/mandatory-advanced-js3/service-worker.js",
-    "static/css/main.727c9a80.chunk.css.map": "/oskarhertzman.github.io/mandatory-advanced-js3/static/css/main.727c9a80.chunk.css.map",
-    "static/js/2.99478aa9.chunk.js.LICENSE": "/oskarhertzman.github.io/mandatory-advanced-js3/static/js/2.99478aa9.chunk.js.LICENSE"
+    "main.css": "/mandatory-advanced-js3/static/css/main.727c9a80.chunk.css",
+    "main.js": "/mandatory-advanced-js3/static/js/main.a1de5259.chunk.js",
+    "main.js.map": "/mandatory-advanced-js3/static/js/main.a1de5259.chunk.js.map",
+    "runtime-main.js": "/mandatory-advanced-js3/static/js/runtime-main.e7feb23d.js",
+    "runtime-main.js.map": "/mandatory-advanced-js3/static/js/runtime-main.e7feb23d.js.map",
+    "static/js/2.523e29f2.chunk.js": "/mandatory-advanced-js3/static/js/2.523e29f2.chunk.js",
+    "static/js/2.523e29f2.chunk.js.map": "/mandatory-advanced-js3/static/js/2.523e29f2.chunk.js.map",
+    "index.html": "/mandatory-advanced-js3/index.html",
+    "precache-manifest.2bba7252e6c693bead71cd1cf23f3e32.js": "/mandatory-advanced-js3/precache-manifest.2bba7252e6c693bead71cd1cf23f3e32.js",
+    "service-worker.js": "/mandatory-advanced-js3/service-worker.js",
+    "static/css/main.727c9a80.chunk.css.map": "/mandatory-advanced-js3/static/css/main.727c9a80.chunk.css.map",
+    "static/js/2.523e29f2.chunk.js.LICENSE": "/mandatory-advanced-js3/static/js/2.523e29f2.chunk.js.LICENSE"
   },
   "entrypoints": [
-    "static/js/runtime-main.d837a4b0.js",
-    "static/js/2.99478aa9.chunk.js",
+    "static/js/runtime-main.e7feb23d.js",
+    "static/js/2.523e29f2.chunk.js",
     "static/css/main.727c9a80.chunk.css",
-    "static/js/main.98ceff03.chunk.js"
+    "static/js/main.a1de5259.chunk.js"
   ]
 }
