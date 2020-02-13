@@ -60,13 +60,13 @@ class Login extends React.Component {
     if (errorCode === "400") {
       this.setState({
         error: 'inline',
-        errorMessage: 'Incorrect input (400)'
+        errorMessage: 'Error: Incorrect input (400)'
         })
       }
     if (errorCode === "401") {
       this.setState({
         error: 'inline',
-        errorMessage: 'Account does not exist (401)'
+        errorMessage: 'Error: Account does not exist / wrong password (401)'
         })
       }
     })

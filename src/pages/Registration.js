@@ -33,9 +33,12 @@ class Registration extends React.Component {
   onRegister (e) {
     e.preventDefault();
     if (this.state.repeat !== this.state.password) {
-      this.setState({errorMessage: 'Password does not match.'})
-      return;
+      console.log("hej")
+      this.setState({
+        error: 'inline',
+        errorMessage: 'Error: Password does not match.'})
     }
+    else {
     axios.post('http://3.120.96.16:3002/register',
     { email: this.state.email,
       password: this.state.password
@@ -74,6 +77,7 @@ class Registration extends React.Component {
         })
       }
     })
+   }
   }
 
 
@@ -131,7 +135,7 @@ class Registration extends React.Component {
               <br></br>
               <label>Repeat password:</label>
               <input type="password" value={this.state.repeat} onChange={this.handleRepeatChange} name="repeatpass" autoComplete="on" required />
-              <br></br>    
+              <br></br>
               <p id="login-link" onClick={this.toLogin}>Already have an account?</p>
               <div className="button-container" onClick={this.onRegister}>
                 <div className="button">
